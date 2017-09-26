@@ -5,4 +5,5 @@ gemspec
 
 gem 'pry'
 gem 'aruba'
+gem 'codecov', :require => false, :group => :test
 
