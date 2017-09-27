@@ -10,7 +10,7 @@ SimpleCov.start
 require 'codecov'
 SimpleCov.formatter = SimpleCov::Formatter::Codecov
 
-SimpleCov.refuse_coverage_drop
+SimpleCov.minimum_coverage 100
 
 require 'mcli'
 

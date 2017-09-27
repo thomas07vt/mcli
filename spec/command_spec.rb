@@ -64,4 +64,11 @@ describe MCLI::Command do
       end
     end
   end
+
+  context '.register_as' do
+    it 'registers itself as the name given' do
+      command.register_as :register_as
+      expect(MCLI::CommandGroup.find_command(:register_as)).to eq(command)
+    end
+  end
 end
