@@ -3,8 +3,8 @@ require 'spec_helper'
 describe MCLI::Command do
   let(:command) { Class.new(MCLI::Command) }
 
-  context '.option' do
-    describe 'alias' do
+  describe '.option' do
+    context 'alias' do
       it 'defaults to nil' do
         command.option :alias
         expect(command.find_option(:alias).alias).to eq nil
@@ -16,7 +16,7 @@ describe MCLI::Command do
       end
     end
 
-    describe 'default' do
+    context 'default' do
       it 'defaults to nil' do
         command.option :default
         expect(command.find_option(:default).default).to eq nil
@@ -28,7 +28,7 @@ describe MCLI::Command do
       end
     end
 
-    describe 'required' do
+    context 'required' do
       it 'defaults to false' do
         command.option :required
         expect(command.find_option(:required).required).to eq false
@@ -40,7 +40,7 @@ describe MCLI::Command do
       end
     end
 
-    describe 'type' do
+    context 'type' do
       it 'defaults to nil' do
         command.option :type
         expect(command.find_option(:type).type).to eq nil
@@ -52,7 +52,7 @@ describe MCLI::Command do
       end
     end
 
-    describe 'boolean' do
+    context 'boolean' do
       it 'defaults to false' do
         command.option :boolean
         expect(command.find_option(:boolean).boolean).to eq false
@@ -65,7 +65,7 @@ describe MCLI::Command do
     end
   end
 
-  context '.register_as' do
+  describe '.register_as' do
     it 'registers itself as the name given' do
       command.register_as :register_as
       expect(MCLI::CommandGroup.find_command(:register_as)).to eq(command)
