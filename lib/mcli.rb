@@ -1,4 +1,5 @@
 require 'mcli/version'
+require 'mcli/help_error'
 require 'mcli/command_group'
 require 'mcli/command'
 require 'mcli/command/option'

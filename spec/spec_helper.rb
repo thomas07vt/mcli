@@ -8,7 +8,7 @@ require 'pry'
 require 'simplecov'
 SimpleCov.start { add_filter 'spec/*' }
 require 'codecov'
-SimpleCov.formatter = SimpleCov::Formatter::Codecov
+#SimpleCov.formatter = SimpleCov::Formatter::Codecov
 SimpleCov.minimum_coverage 100
 
 require 'mcli'

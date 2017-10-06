@@ -6,6 +6,10 @@ class MCLI::Command
   def parse
     @options = {}
 
+    parser.on("-h", "--help", "Help") do
+      raise MCLI::HelpError.new
+    end
+
     self.class.options.each do |option|
       @options[option.name] = option.default if option.default
 
@@ -15,6 +19,14 @@ class MCLI::Command
     end
 
     parser.parse!
+
+    self.class.options
+      .select { |option| option.required == true }
+      .map do |required_option|
+        if @options[required_option.name].nil?
+          raise OptionParser::MissingArgument
+        end
+      end
   end
 
   def parser
@@ -44,8 +56,12 @@ class MCLI::Command
 
     def call
       new(ARGV).tap do |command|
-        command.parse
-        command.run
+        begin
+          command.parse
+          command.run
+        rescue MCLI::HelpError
+          command.help
+        end
       end
     end
   end

@@ -18,7 +18,7 @@ class MCLI::Command::Option
       args << "-#{@alias}"                   if @alias
       args << "--#{@name} #{@name.upcase}"   if @required && !@boolean
       args << "--#{@name} [#{@name.upcase}]" if !@required && !@boolean
-      args << "--[no]#{@name}"               if @boolean
+      args << "--[no-]#{@name}"              if @boolean
     end
   end
 
