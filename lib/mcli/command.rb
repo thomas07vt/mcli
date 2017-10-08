@@ -1,5 +1,7 @@
 class MCLI::Command
-  def initialize(args)
+  attr_reader :args
+
+  def initialize(args=[])
     @args = args
   end
 
@@ -34,7 +36,7 @@ class MCLI::Command
   end
 
   def options
-    @options
+    @options ||= {}
   end
 
   class << self
@@ -44,10 +46,6 @@ class MCLI::Command
 
     def options
       @options ||= []
-    end
-
-    def find_option(option_name)
-      options.find { |o| o.name == option_name }
     end
 
     def register_as(command_name)

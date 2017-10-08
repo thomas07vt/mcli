@@ -9,7 +9,11 @@ module MCLI
   class << self
     def run
       command = ARGV.shift
-      CommandGroup.commands.fetch(command.to_s.to_sym, NullCommand).call
+
+      CommandGroup.commands.fetch(command.to_s.to_sym) do |command|
+        ARGV.unshift(command)
+        NullCommand
+      end.call
     end
   end
 end

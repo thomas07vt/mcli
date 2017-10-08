@@ -4,16 +4,25 @@ require 'bundler/setup'
 require 'aruba'
 require 'aruba/api'
 require 'pry'
-
 require 'simplecov'
-SimpleCov.start { add_filter 'spec/*' }
 require 'codecov'
+
+SimpleCov.start { add_filter 'spec/*' }
 #SimpleCov.formatter = SimpleCov::Formatter::Codecov
 SimpleCov.minimum_coverage 100
+
+SimpleCov.at_exit do
+  SimpleCov.result.format!# unless $!
+end
 
 require 'mcli'
 
 require './spec/support/support'
+
+Aruba.configure do |config|
+  # use current working directory
+  config.home_directory = './bin/'
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

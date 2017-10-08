@@ -8,10 +8,6 @@ class MCLI::CommandGroup
       @commands ||= {}
     end
 
-    def find_command(command_name)
-      commands[command_name]
-    end
-
     def clear
       @commands = {}
     end
