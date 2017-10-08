@@ -1,3 +1,4 @@
+require 'optparse'
 require 'mcli/version'
 require 'mcli/help_error'
 require 'mcli/command_group'
