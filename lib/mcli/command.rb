@@ -8,10 +8,6 @@ class MCLI::Command
   def parse
     @options = {}
 
-    parser.on("-h", "--help", "Help") do
-      raise MCLI::HelpError.new
-    end
-
     self.class.options.each do |option|
       @options[option.name] = option.default if option.default
 
@@ -31,12 +27,20 @@ class MCLI::Command
       end
   end
 
-  def parser
-    @parser ||= OptionParser.new
-  end
-
   def options
     @options ||= {}
+  end
+
+  def parser
+    @parser ||= create_parser
+  end
+
+  def create_parser
+    OptionParser.new.tap do |parser|
+      parser.on("-h", "--help", "Help") do
+        raise MCLI::HelpError.new
+      end
+    end
   end
 
   class << self
