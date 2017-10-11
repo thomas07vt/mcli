@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["thomas07@vt.edu"]
 
   spec.summary       = %q{Create CLI tools using ruby objects with a nice API}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/thomas07vt/mcli"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
