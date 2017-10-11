@@ -21,8 +21,174 @@ Or install it yourself as:
 
 ## Usage
 
+1. Require MCLI
+
 ```ruby
-# @todo
+require 'mcli'
+```
+
+2. Create a ```MCLI::Command``` subclass
+
+```ruby
+class MyCommand < MCLI::Command
+end
+```
+
+3. Call the Command Runner
+
+```ruby
+MCLI.run
+```
+
+### Examples
+
+#### Arguments
+
+```ruby
+#args.rb
+```
+```ruby
+#!/usr/bin/env ruby
+require 'mcli'
+
+class Args < MCLI::Command
+  register_as :args
+
+  def run
+    puts "The passed args are: #{args.inspect}"
+  end
+end
+
+MCLI.run
+```
+
+```bash
+$ ./args.rb args first second
+The passed args are: ["first", "second"]
+```
+
+##### Options with aliases
+
+```ruby
+#options.rb
+```
+```ruby
+#!/usr/bin/env ruby
+require 'mcli'
+
+class Options < MCLI::Command
+  register_as :options
+  option :say, alias: :s
+
+  def run
+    puts "Saying: #{options[:say]}"
+  end
+end
+
+MCLI.run
+```
+
+```bash
+$ ./options.rb options --say 'hello'
+Saying: hello
+$ ./options.rb options -s 'hello'
+Saying: hello
+```
+
+##### Options with defaults
+
+```ruby
+#options.rb
+```
+```ruby
+#!/usr/bin/env ruby
+require 'mcli'
+
+class Options < MCLI::Command
+  register_as :options
+  option :say, alias: :s, default: 'hello'
+
+  def run
+    puts "Saying: #{options[:say]}"
+  end
+end
+
+MCLI.run
+```
+
+```bash
+$ ./options.rb options --say hi
+Saying: hi
+$ ./options.rb options -s hi
+Saying: hi
+$ ./options.rb options
+Saying: hello
+```
+
+##### Required Options
+
+```ruby
+#options.rb
+```
+```ruby
+#!/usr/bin/env ruby
+require 'mcli'
+
+class Options < MCLI::Command
+  register_as :options
+  option :say, alias: :s, required: true
+
+  def run
+    puts "Saying: #{options[:say]}"
+  end
+end
+
+MCLI.run
+```
+
+```bash
+$ ./options.rb options --say hi
+Saying: hi
+$ ./options.rb options -s hi
+Saying: hi
+$ ./options.rb options
+mcli/lib/mcli/command.rb:25:in `block in parse': missing argument:  (OptionParser::MissingArgument)
+  mcli/lib/mcli/command.rb:23:in `map'
+  mcli/lib/mcli/command.rb:23:in `parse'
+  mcli/lib/mcli/command.rb:62:in `block in call'
+  mcli/lib/mcli/command.rb:60:in `tap'
+  mcli/lib/mcli/command.rb:60:in `call'
+  mcli/lib/mcli.rb:17:in `run'
+  from options.rb `<main>'
+
+```
+
+##### Boolean Options
+
+```ruby
+#options.rb
+```
+```ruby
+#!/usr/bin/env ruby
+require 'mcli'
+
+class Options < MCLI::Command
+  register_as :options
+  option :heads, alias: :h, boolean: true
+
+  def run
+    puts "Heads: #{options[:heads]}"
+  end
+end
+
+MCLI.run
+```
+
+```bash
+$ ./options.rb options --heads
+Heads: true
+$ ./options.rb options --no-heads
+Heads: false
 ```
 
 ## Development
@@ -33,10 +199,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/mcli.
+Bug reports and pull requests are welcome on GitHub at https://github.com/thomas07vt/mcli.
 
 
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
