@@ -10,6 +10,7 @@ RSpec.describe MCLI do
 
   context 'no args' do
     it 'prints help' do
+      set_argv ''
       expect { MCLI.run }
         .to output(MCLI::NullCommand.new.tap(&:parse).help_message)
         .to_stdout_from_any_process

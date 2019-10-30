@@ -191,6 +191,32 @@ $ ./options.rb options --no-heads
 Heads: false
 ```
 
+##### Capturing all arguments
+
+```ruby
+#capture.rb
+```
+```ruby
+#!/usr/bin/env ruby
+require 'mcli'
+
+class Options < MCLI::Command
+  register_as :capture
+  capture_all!
+
+  def run
+    puts "#{arg.inspect}"
+  end
+end
+
+MCLI.run
+```
+
+```bash
+$ ./capture.rb capture --toast=cool one two -a ok three
+["--toast=cool", "one", "two", "-a", "ok", "three"]
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

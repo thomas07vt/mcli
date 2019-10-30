@@ -56,10 +56,18 @@ class MCLI::Command
       MCLI::CommandGroup.register(command_name, self)
     end
 
+    def capture_all!
+      @capture_all = true
+    end
+
+    def capture_all?
+      @capture_all
+    end
+
     def call
       new(ARGV).tap do |command|
         begin
-          command.parse
+          command.parse unless capture_all?
           command.run
         rescue MCLI::HelpError
           command.help
