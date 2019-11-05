@@ -37,6 +37,8 @@ class MCLI::Command
 
   def create_parser
     OptionParser.new.tap do |parser|
+      parser.program_name = self.class.command_name
+
       parser.on("-h", "--help", "Help") do
         raise MCLI::HelpError.new
       end
@@ -58,6 +60,7 @@ class MCLI::Command
     end
 
     def register_as(command_name)
+      @command_name = command_name
       MCLI::CommandGroup.register(command_name, self)
     end
 
@@ -71,6 +74,10 @@ class MCLI::Command
 
     def capture_all?
       @capture_all
+    end
+
+    def command_name
+      @command_name
     end
 
     def call
