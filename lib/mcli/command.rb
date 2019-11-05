@@ -44,6 +44,11 @@ class MCLI::Command
   end
 
   class << self
+    def description(desc=nil)
+      @description = desc unless desc.nil?
+      @description ||= ''
+    end
+
     def option(option_name, opts={})
       options << Option.new(option_name, opts)
     end
