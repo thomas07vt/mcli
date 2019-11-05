@@ -9,7 +9,7 @@ describe MCLI::Command do
   context 'root command' do
     before do
       Class.new(MCLI::Command) do
-        register_as :_root
+        register_as_root
         option 'root', alias: 'r'
 
         def run

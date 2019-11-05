@@ -13,7 +13,7 @@ module MCLI
 
       CommandGroup.commands.fetch(command.to_s.to_sym) do |command|
         ARGV.unshift(command)
-        CommandGroup.commands[:_root] || NullCommand
+        CommandGroup.root_command || NullCommand
       end.call
     end
   end
