@@ -17,7 +17,7 @@ class MCLI::Command::Option
     [].tap do |args|
       args << "-#{@alias}"                   if @alias
       args << "--#{@name} #{@name.upcase}"   if @required && !@boolean
-      args << "--#{@name} [#{@name.upcase}]" if !@required && !@boolean
+      args << "--#{@name} [#{@default || @name.upcase}]" if !@required && !@boolean
       args << "--[no-]#{@name}"              if @boolean
     end
   end
