@@ -244,6 +244,43 @@ $ ./root.rb arg --option opt
 opt
 ```
 
+##### Register nested commands
+```ruby
+#nestable.rb
+```
+```ruby
+#!/usr/bin/env ruby
+require 'mcli'
+
+class Nestable < MCLI::Command
+  register_as :nestable
+  capture_all!
+
+  def run
+    NestedGroup.call(args)
+  end
+
+  class NestedGroup < MCLI::CommandGroup
+  end
+end
+
+class NestedCommand < MCLI::Command
+  register_as :command, to: Nestable::Group
+  capture_all!
+
+  def run
+    puts args.inspect
+  end
+end
+
+MCLI.run
+```
+
+```bash
+$ ./nestable.rb nestable command --toast=cool one two -a ok three
+["--toast=cool", "one", "two", "-a", "ok", "three"]
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

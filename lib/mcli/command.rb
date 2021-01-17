@@ -59,9 +59,9 @@ class MCLI::Command
       @options ||= []
     end
 
-    def register_as(command_name)
+    def register_as(command_name, to: default_command_group)
       @command_name = command_name
-      MCLI::CommandGroup.register(command_name, self)
+      to.register(command_name, self)
     end
 
     def register_as_root
@@ -78,6 +78,10 @@ class MCLI::Command
 
     def command_name
       @command_name
+    end
+
+    def default_command_group
+      MCLI::CommandGroup
     end
 
     def call(args)

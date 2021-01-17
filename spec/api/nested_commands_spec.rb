@@ -6,30 +6,36 @@ describe MCLI::Command do
     expect(MCLI::CommandGroup.commands.empty?).to eq true
   end
 
-  context 'root command' do
+  context 'nested commands' do
     before do
-      Class.new(MCLI::Command) do
-        register_as_root
-        option 'root', alias: 'r'
+      group_command = Class.new(MCLI::Command) do
+        register_as :group
+        capture_all!
 
         def run
-          puts args
-          puts options[:root]
+          self.class.group.call(args)
+        end
+
+        def self.group
+          @group ||= Class.new(MCLI::CommandGroup)
+        end
+      end
+
+      Class.new(MCLI::Command) do
+        register_as :nested, to: group_command.group
+        option :works
+
+        def run
+          puts options[:works]
         end
       end
     end
 
-    it 'is supported' do
-      set_argv "one two -r three"
+    it 'is supported through groups' do
+      set_argv "group nested --works success"
       expect { MCLI.run }
-        .to output("one\ntwo\nthree\n")
+        .to output("success\n")
         .to_stdout_from_any_process
     end
   end
 end
-
-# gitrc branch add acceptance -f f1 -f f2
-# bin   comg?   com arg         options
-#
-#
-#
