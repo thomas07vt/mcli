@@ -200,7 +200,7 @@ Heads: false
 #!/usr/bin/env ruby
 require 'mcli'
 
-class Options < MCLI::Command
+class Capture < MCLI::Command
   register_as :capture
   capture_all!
 
@@ -215,6 +215,33 @@ MCLI.run
 ```bash
 $ ./capture.rb capture --toast=cool one two -a ok three
 ["--toast=cool", "one", "two", "-a", "ok", "three"]
+```
+
+##### Register a command as the root command
+```ruby
+#root.rb
+```
+```ruby
+#!/usr/bin/env ruby
+require 'mcli'
+
+class Root < MCLI::Command
+  register_as_root
+  option 'option'
+
+  def run
+    puts "#{arg.inspect}"
+    puts "#{options[:root]}"
+  end
+end
+
+MCLI.run
+```
+
+```bash
+$ ./root.rb arg --option opt
+[arg]
+opt
 ```
 
 ## Development

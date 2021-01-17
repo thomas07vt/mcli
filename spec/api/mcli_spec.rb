@@ -39,7 +39,7 @@ RSpec.describe MCLI do
     it 'prints help' do
       set_argv '--help'
       expect { MCLI.run }
-        .to output(MCLI::NullCommand.call.help_message)
+        .to output(MCLI::NullCommand.call(["--help"]).help_message)
         .to_stdout_from_any_process
     end
   end
@@ -48,7 +48,7 @@ RSpec.describe MCLI do
     it 'prints help' do
       set_argv '-h'
       expect { MCLI.run }
-        .to output(MCLI::NullCommand.call.help_message)
+        .to output(MCLI::NullCommand.call(["--help"]).help_message)
         .to_stdout_from_any_process
     end
   end

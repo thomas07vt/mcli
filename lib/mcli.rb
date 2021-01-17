@@ -9,12 +9,7 @@ require 'mcli/null_command'
 module MCLI
   class << self
     def run
-      command = ARGV.shift
-
-      CommandGroup.commands.fetch(command.to_s.to_sym) do |command|
-        ARGV.unshift(command)
-        CommandGroup.root_command || NullCommand
-      end.call
+      CommandGroup.call(ARGV.dup)
     end
   end
 end

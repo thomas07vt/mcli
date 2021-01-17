@@ -16,7 +16,7 @@ class MCLI::Command
       end
     end
 
-    parser.parse!
+    parser.parse!(@args)
 
     self.class.options
       .select { |option| option.required == true }
@@ -80,8 +80,8 @@ class MCLI::Command
       @command_name
     end
 
-    def call
-      new(ARGV).tap do |command|
+    def call(args)
+      new(args).tap do |command|
         begin
           command.parse unless capture_all?
           command.run

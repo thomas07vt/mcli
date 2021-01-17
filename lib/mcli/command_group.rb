@@ -19,6 +19,15 @@ class MCLI::CommandGroup
     def root_command
       @root_command
     end
+
+    def call(args)
+      command = args.shift
+
+      commands.fetch(command.to_s.to_sym) do |command|
+        args.unshift(command)
+        root_command || MCLI::NullCommand
+      end.call(args)
+    end
   end
 end
 
