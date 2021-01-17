@@ -64,8 +64,8 @@ class MCLI::Command
       to.register(command_name, self)
     end
 
-    def register_as_root
-      MCLI::CommandGroup.register_root(self)
+    def register_as_root(to: default_command_group)
+      to.register_root(self)
     end
 
     def capture_all!
